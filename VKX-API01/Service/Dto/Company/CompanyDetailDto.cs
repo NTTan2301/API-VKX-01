@@ -1,19 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace VKX_API01.Models
+﻿namespace VKX_API01.Service.Dto.Company
 {
-    public class Company
+    public class CompanyDetailDto
     {
-        [Key]
         public int Id { get; set; }
-        [Required]
-        [MaxLength(250)]
         public string Name { get; set; }
-        [MaxLength(100)]
         public string Address { get; set; } = string.Empty;
-        [MaxLength(20)]
         public string Phone { get; set; } = string.Empty;
-        [MaxLength(50)]
         public string Email { get; set; } = string.Empty;
     }
 }

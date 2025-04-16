@@ -1,34 +1,38 @@
-﻿using VKX_API01.Help.Reponse;
+﻿using VKX_API01.Help.BaseSerivce;
+using VKX_API01.Help.Reponse;
 using VKX_API01.Models;
+using VKX_API01.Service.Dto.Company;
 
 namespace VKX_API01.Service
 {
     public class CompanyService
     {
         private readonly IReponsitory _repository;
-        public CompanyService(IReponsitory reponsitory)
+        private readonly IBaseService _baseService;
+        public CompanyService(IReponsitory reponsitory, IBaseService baseService)
         {
                 _repository = reponsitory;
+                 _baseService = baseService;
         }
 
-        public async Task<List<Company>> getAll()
+        public async Task<List<CompanyGridDto>> getAll()
         {
-            var lstCompany = await _repository.GetAllAsync<Company>();
-            return lstCompany;
+            var lstCompany = await _baseService.GetAll<Company, CompanyGridDto>();
+                return lstCompany;
         }
-        public async Task<Company> GetById(int Id)
+        public async Task<CompanyDetailDto> GetById(int Id)
         {
-            var company = await _repository.GetByIdAsync<Company>(Id);
+            var company = await _baseService.GetById<Company,CompanyDetailDto>(Id);
             return company;
         }
-        public async Task<Company> Create(Company model)
+        public async Task<CompanyCreateDto> Create(CompanyCreateDto model)
         {
-            var companyCreate = await _repository.AddAsync<Company>(model);
+            var companyCreate = await _baseService.Create<Company, CompanyCreateDto>(model);
             return companyCreate;
         }
-        public async Task<bool> Update(int Id, Company model)
+        public async Task<bool> Update(int Id, CompanyUpdateDto model)
         {
-            var companyUpdate = await _repository.UpdateAsync<Company>(Id, model);
+            var companyUpdate = await _baseService.Update<Company,CompanyUpdateDto>(Id, model);
             return companyUpdate;
         }
         public async Task<bool> Delete(int Id)
