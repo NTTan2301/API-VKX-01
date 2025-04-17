@@ -1,5 +1,9 @@
 ﻿
+using System.Linq.Expressions;
 using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
+using Microsoft.EntityFrameworkCore;
+using VKX_API01.Help.Paging;
 using VKX_API01.Help.Reponse;
 
 namespace VKX_API01.Help.BaseSerivce
@@ -78,6 +82,35 @@ namespace VKX_API01.Help.BaseSerivce
         {
             // Xóa entity từ DB
             return await _repository.DeleteAsync<TEntity>(id);
+        }
+
+        public async Task<PagedResult<TDto>> GetAllPagedAsync<TEntity, TDto>(PagingParams<TDto> pagingParams)
+             where TEntity : class
+             where TDto : class
+        {
+            IQueryable<TEntity> query = _repository.Query<TEntity>();
+
+            var dtoPredicates = pagingParams.GetPredicates();
+            foreach (var dtoPredicate in dtoPredicates)
+            {
+                var entityPredicate = _mapper.MapExpression<Expression<Func<TEntity, bool>>>(dtoPredicate);
+                query = query.Where(entityPredicate);
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var skip = (pagingParams.PageNumber - 1) * pagingParams.PageSize;
+            var entities = await query.Skip(skip).Take(pagingParams.PageSize).ToListAsync();
+
+            var dtos = _mapper.Map<List<TDto>>(entities);
+
+            return new PagedResult<TDto>
+            {
+                Items = dtos,
+                TotalCount = totalCount,
+                PageNumber = pagingParams.PageNumber,
+                PageSize = pagingParams.PageSize
+            };
         }
     }
 }

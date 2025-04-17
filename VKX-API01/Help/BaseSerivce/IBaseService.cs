@@ -1,4 +1,6 @@
-﻿namespace VKX_API01.Help.BaseSerivce
+﻿using VKX_API01.Help.Paging;
+
+namespace VKX_API01.Help.BaseSerivce
 {
     public interface IBaseService
     {
@@ -20,5 +22,8 @@
 
         Task<bool> Delete<TEntity>(object id)
             where TEntity : class;
+        Task<PagedResult<TDto>> GetAllPagedAsync<TEntity, TDto>(PagingParams<TDto> pagingParams)
+        where TEntity : class
+        where TDto : class;
     }
 }

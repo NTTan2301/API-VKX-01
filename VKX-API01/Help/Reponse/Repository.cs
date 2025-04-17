@@ -61,6 +61,11 @@ namespace VKX_API01.Help.Reponse
         {
             await _context.SaveChangesAsync();
         }
+
+        public IQueryable<T> Query<T>() where T : class
+        {
+            return _context.Set<T>().AsQueryable();
+        }
     }
 
 }

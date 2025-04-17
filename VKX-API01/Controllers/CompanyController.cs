@@ -16,9 +16,9 @@ namespace VKX_API01.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] CompanyGridPagingDto dto)
         {
-            return Ok(await _companyService.getAll());
+            return Ok(await _companyService.GetPagingAsync(dto));
         }
 
         [HttpGet("{Id}")]

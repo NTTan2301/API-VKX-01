@@ -8,5 +8,8 @@
         Task<bool> UpdateAsync<T>(object id, T entity) where T : class;
         Task<bool> DeleteAsync<T>(object id) where T : class;
         Task SaveAsync();
+        // Thêm phương thức Query để lấy IQueryable<TEntity>
+        IQueryable<T> Query<T>() where T : class;
+
     }
 }

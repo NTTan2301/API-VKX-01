@@ -1,4 +1,5 @@
 ﻿using VKX_API01.Help.BaseSerivce;
+using VKX_API01.Help.Paging;
 using VKX_API01.Help.Reponse;
 using VKX_API01.Models;
 using VKX_API01.Service.Dto.Company;
@@ -13,6 +14,13 @@ namespace VKX_API01.Service
         {
                 _repository = reponsitory;
                  _baseService = baseService;
+        }
+
+        public async Task<PagedResult<CompanyGridDto>> GetPagingAsync(CompanyGridPagingDto pagingParams)
+        {
+            var result = await _baseService.GetAllPagedAsync<Company, CompanyGridDto>(pagingParams);
+
+            return result;
         }
 
         public async Task<List<CompanyGridDto>> getAll()

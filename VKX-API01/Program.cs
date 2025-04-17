@@ -1,3 +1,4 @@
+using AutoMapper.Extensions.ExpressionMapping;
 using Microsoft.EntityFrameworkCore;
 using VKX_API01.Application;
 using VKX_API01.Help.BaseSerivce;
@@ -27,7 +28,11 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());  
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddExpressionMapping();
+    cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
+});
 
 builder.Services.AddScoped<IReponsitory, Repository>();
 builder.Services.AddScoped<IBaseService, BaseService>();
