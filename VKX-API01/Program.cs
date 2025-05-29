@@ -22,11 +22,12 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")  
+        policy.WithOrigins("http://localhost:3000")  
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
+
 
 builder.Services.AddAutoMapper(cfg =>
 {

@@ -28,21 +28,25 @@ namespace VKX_API01.Service
             var lstCompany = await _baseService.GetAll<Company, CompanyGridDto>();
                 return lstCompany;
         }
+
         public async Task<CompanyDetailDto> GetById(int Id)
         {
             var company = await _baseService.GetById<Company,CompanyDetailDto>(Id);
             return company;
         }
+
         public async Task<CompanyCreateDto> Create(CompanyCreateDto model)
         {
             var companyCreate = await _baseService.Create<Company, CompanyCreateDto>(model);
             return companyCreate;
         }
+
         public async Task<bool> Update(int Id, CompanyUpdateDto model)
         {
             var companyUpdate = await _baseService.Update<Company,CompanyUpdateDto>(Id, model);
             return companyUpdate;
         }
+
         public async Task<bool> Delete(int Id)
         {
             var IdDelete = await _repository.DeleteAsync<Company>(Id);
